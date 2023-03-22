@@ -147,3 +147,48 @@ create a new base.html file in templates folder with the contents :
 </html>
 ```
 
+python3 manage.py startapp home
+mkdir -p home/templates/home
+
+create index.html in this folder with content
+```html
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1 class="display-4 text-success">It works!</h1>
+{% endblock %}
+```
+
+Edit views.py to add
+```python
+def index(request):
+    """ A view to return the index page """
+
+    return render(request, 'home/index.html')
+```
+
+create a new urls.py file in the "home" directory and insert the following
+
+```python
+from django.contrib import admin
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.index, name='home')
+]
+```
+
+In the BASE urls.py add the following urlpattern
+    path('', include('home.urls')),
+
+In settings.py add the following in installed apps
+    'home',
+
+In settings.py TEMPLATES DIRS add
+
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth'),
+
+python3 manage.py runserver
