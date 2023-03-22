@@ -194,12 +194,33 @@ In settings.py TEMPLATES DIRS add
 python3 manage.py runserver
 should display IT WORKS in green
  
-ADD in templates.base.html before closing body tag
-    {% block page_header %}
-    {% endblock %}
+Edit home/templates/home/index.html to read
+```html
+{% extends "base.html" %}
+{% load static %}
 
-    {% block content %}
-    {% endblock %}
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
 
-    {% block postloadjs %}
-    {% endblock %}
+{% block content %}
+    <div class="container h-100">
+        <div class="row h-100">
+            <div class="col-7 col-md-6 my-auto">
+                <h1 class="display-4 logo-font text-black">
+                    The new collections are here
+                </h1>
+                <div class="my-5">
+                    <h4>
+                        <a href="" class="shop-now-button btn btn-lg rounded-0 text-uppercase py-3">Shop Now</a>
+                    </h4>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+```
