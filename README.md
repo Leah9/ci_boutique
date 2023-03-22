@@ -224,3 +224,232 @@ Edit home/templates/home/index.html to read
     </div>
 {% endblock %}
 ```
+Header, nav links and login or create account
+EDIT templates/base.html to read
+```html
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+
+    {% block meta %}
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% endblock %}
+
+    {% block extra_meta %}
+    {% endblock %}
+
+    {% block corecss %}
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    {% endblock %}
+
+    {% block extra_css %}
+    {% endblock %}
+
+    {% block corejs %}
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    {% endblock %}
+
+    {% block extra_js %}
+    {% endblock %}
+
+    <title>Boutique Ado {% block extra_title %}{% endblock %}</title>
+  </head>
+  <body>
+    <header class="container-fluid fixed-top">
+        <div class="row">
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0 text-center text-lg-left">
+                <a href="{% url 'home' %}" class="nav-link main-logo-link">
+                    <h2 class="logo-font text-black my-0"><strong>Boutique</strong> Ado</h2>
+                </a>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+                <form method="GET" action="">
+                    <div class="input-group w-100">
+                        <input class="form-control border border-black rounded-0" type="text" name="q" placeholder="Search our site">
+                        <div class="input-group-append">
+                            <button class="form-control btn btn-black border border-black rounded-0" type="submit">
+                                <span class="icon">
+                                    <i class="fas fa-search"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-12 col-lg-4 my-auto py-1 py-lg-0">
+                <ul class="list-inline list-unstyled text-center text-lg-right my-0">
+                    <li class="list-inline-item dropdown">
+                        <a class="text-black nav-link" href="#" id="user-options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="text-center">
+                                <div><i class="fas fa-user fa-lg"></i></div>
+                                <p class="my-0">My Account</p>
+                            </div>
+                        </a>
+                        <div class="dropdown-menu border-0" aria-labelledby="user-options">
+                            {% if request.user.is_authenticated %}
+                                {% if request.user.is_superuser %}
+                                    <a href="" class="dropdown-item">Product Management</a>
+                                {% endif %}
+                                <a href="" class="dropdown-item">My Profile</a>
+                                <a href="{% url 'account_logout' %}" class="dropdown-item">Logout</a>
+                            {% else %}
+                                <a href="{% url 'account_signup' %}" class="dropdown-item">Register</a>
+                                <a href="{% url 'account_login' %}" class="dropdown-item">Login</a>
+                            {% endif %}
+                        </div>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="{% if grand_total %}text-info font-weight-bold{% else %}text-black{% endif %} nav-link" href="">
+                            <div class="text-center">
+                                <div><i class="fas fa-shopping-bag fa-lg"></i></div>
+                                <p class="my-0">
+                                    {% if grand_total %}
+                                        £{{ grand_total|floatformat:2 }}
+                                    {% else %}
+                                        £0.00
+                                    {% endif %}
+                                </p>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    {% if messages %}
+        <div class="message-container"></div>
+    {% endif %}
+
+    {% block page_header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block postloadjs %}
+    {% endblock %}
+
+    
+  </body>
+</html>
+```
+
+Create directories
+mkdir static
+mkdir media
+mkdir static/css
+
+create static/css/base.css with the content....
+
+```html
+html {
+    height: 100%;
+}
+
+body {
+    background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
+    background-size: cover;
+    height: calc(100vh - 164px);
+    color: #555;
+    font-family: 'Lato';
+}
+
+/* from Bulma */
+.icon {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.logo-font {
+    text-transform: uppercase;
+}
+
+.main-logo-link {
+    width: fit-content;
+}
+
+.shop-now-button {
+    background: black;
+    color: white;
+    min-width: 260px;
+}
+
+.btn-black {
+    background: black;
+    color: white;
+}
+
+.shop-now-button:hover,
+.shop-now-button:active,
+.shop-now-button:focus,
+.btn-black:hover,
+.btn-black:active,
+.btn-black:focus {
+    background: #222;
+    color: white;
+}
+
+.text-black {
+    color: #000 !important;
+}
+
+.border-black {
+    border: 1px solid black !important;
+}
+
+/* -------------------------------- Media Queries */
+
+/* Slightly larger container on xl screens */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 80%;
+  }
+}
+
+/* fixed top navbar only on medium and up */
+@media (min-width: 992px) {
+    .fixed-top-desktop-only {
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        z-index: 1030;
+    }
+
+    .header-container {
+        padding-top: 164px;
+    }
+}
+```
+
+Sorts out issues with header
+In templates/base.html change second div 'row' class to
+<div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
+
+add MY font awesome link to top of  base.html
+<script src="https://kit.fontawesome.com/0067dce3fb.js" crossorigin="anonymous"></script>
+AND
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+
+IN settings.py add the following under STATIC_URL = '/static/'
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+IN projectname/urls.py add the following near the top
+from django.conf import settings
+from django.conf.urls.static import static
+
+and at the bottom after the closing square bracket
++ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
