@@ -50,7 +50,7 @@ SITE_ID = 1
 Add "import os" to the top of the file
 
 In urls.py under urlpatterns add
-path('accounts', include('allauth.urls')),
+path('accounts/', include('allauth.urls')),
 
 edit  from django.urls import path, include
 
@@ -60,3 +60,24 @@ python3 manage.py runserver
 open in browser / admin/ login
 change domain to whatever.example.com4Display nemw to whatever, onlu impotand if usingsocial media auth
 
+git add .
+git commit -m "add auth"
+git push
+
+Edit settings.py
+ADD below site id
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
+ACCOUNT_USERNAME_MIN_LENGTH = 4
+LOGIN_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/'
+
+
+python3 manage.py runserver
+Check browser /admin/ 
+add email to superuser, verified and primary, save
+
+** Bootstrap
