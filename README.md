@@ -192,3 +192,14 @@ In settings.py TEMPLATES DIRS add
             os.path.join(BASE_DIR, 'templates', 'allauth'),
 
 python3 manage.py runserver
+should display IT WORKS in green
+ 
+ADD in templates.base.html before closing body tag
+    {% block page_header %}
+    {% endblock %}
+
+    {% block content %}
+    {% endblock %}
+
+    {% block postloadjs %}
+    {% endblock %}
