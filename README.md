@@ -80,4 +80,11 @@ python3 manage.py runserver
 Check browser /admin/ 
 add email to superuser, verified and primary, save
 
+pip3 freeze > requirements.txt
+mkdir templates
+mkdir templates/allauth
+git add .
+git commit -m "setup allauth"
+git push
+
 ** Bootstrap
