@@ -536,4 +536,59 @@ IN base.html insert the following at the end of the header section
         </div>
 ```
 
+# Setting up products
+python3 manage.py startapp products
+pip3 install pillow
 
+In settings.py add the following to the INSTALLED_APPS section
+'products',
+
+mkdir products/fixtures
+
+IN product/models.py...
+```python
+class Category(models.Model):
+    name = models.CharField(max_length=254)
+    friendly_name = models.CharField(max_length=254, null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+
+    def get_friendly_name(self):
+        return self.friendly_name
+
+
+class Product(models.Model):
+    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    sku = models.CharField(max_length=254, null=True, blank=True)
+    name = models.CharField(max_length=254)
+    description = models.TextField()
+    price = models.DecimalField(max_digits=6, decimal_places=2)
+    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    image_url = models.URLField(max_length=1024, null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+
+    def __str__(self):
+        return self.name
+```
+To test the category / product classes are set correctly
+python3 manage.py makemigrations --dry-run 
+then if happy
+python3 manage.py makemigrations
+python3 manage.py migrate --plan
+python3 manage.py migrate
+
+in admin.py ADD the following
+
+```python
+from .models import Product, Category
+
+# Register your models here.
+admin.site.register(Product)
+admin.site.register(Category)
+```
+
+### For demo purposes use categories.json and products.json
+images from https://github.com/Code-Institute-Solutions/boutique_ado_v1/tree/bf096a773ea7e32253e20f58c1d6139317f681be/media
+python3 manage.py loaddata categories
+python3 manage.py loaddata products
