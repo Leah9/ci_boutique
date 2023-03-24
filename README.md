@@ -643,7 +643,7 @@ def all_products(request):
     context = {
         'products': products,
     }
-    return render(request, 'home/products.html', context)
+    return render(request, 'products/products.html', context)
 ```
 
 remove from django.contrib import admin from home/urls.py
@@ -683,12 +683,27 @@ In that file add
 {% endblock %}
 
 {% block content %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                {{ products }}
-            </div>
+<div class="overlay"></div>
+<div class="container">
+    <div class="row">
+        <div class="col">
+            {{ products }}
         </div>
     </div>
+</div>
 {% endblock %}
+```
+
+In base.css add
+
+```
+.overlay {
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	position: fixed;
+	background: white;
+	z-index: -1;
+}
 ```
