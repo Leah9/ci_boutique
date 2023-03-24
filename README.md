@@ -592,3 +592,39 @@ admin.site.register(Category)
 images from https://github.com/Code-Institute-Solutions/boutique_ado_v1/tree/bf096a773ea7e32253e20f58c1d6139317f681be/media
 python3 manage.py loaddata categories
 python3 manage.py loaddata products
+
+The categories and products are then visible in admin
+
+Fis the plural categorys issux in models.py
+```python
+class Category(models.Model):
+    class Meta:
+        verbose_name_plural = 'Categories'
+```
+
+## Improve display of categories and products in admin
+ADD the following to products/admin.py
+```python
+class ProductAdmin(admin.ModelAdmin):
+    list_display = (
+        'sku',
+        'name',
+        'category',
+        'price',
+        'rating',
+        'image',
+    )
+
+    ordering = ('sku',)
+
+
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = (
+        'friendly_name',
+        'name',
+    )
+
+
+admin.site.register(Product, ProductAdmin)
+admin.site.register(Category, CategoryAdmin)
+```
