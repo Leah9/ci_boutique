@@ -1,3 +1,22 @@
+User stories for web shop
+
+
+| As a      | I want to be able to          | So that i can |
+|-----------|-----------------------|----------------|
+| Shopper   | View a list of products       | Select one or many to purchase |
+| Shopper   | View single product details   | Identify the proce, read descripton, specification etc |
+| Shopper   | View the total cost in basket | Avoid spending too much |
+| Registration, login and user account      | |
+| Shopper   | Log in / out                  | Acccess my account information |
+| Shopper   | Recover password              | Restore account access |
+| Shopper   | View my account informtion    | See previous order details |
+| Searching for product                     |
+| Shopper   | Sort products asc, desc       | Find cheapest or highest rated |
+| Shopper   | Sort by category              | Only show what i am interested in buying |
+| Shopper   | Search by product name        | Narrow down my list of items |
+
+
+
 pip3 install 'django<4'
 
 django-admin startproject ci_boutique .
@@ -476,3 +495,45 @@ from django.conf.urls.static import static
 
 and at the bottom after the closing square bracket
 + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+CHECK IT WORKS
+python3 manage.py runserver
+
+## Adding nav bar
+IN base.html top of body block, code is from bootstrap navbar
+```html
+ <div class="row bg-white">
+    <nav class="navbar navbar-expand-lg navbar-light w-100">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        {% include 'includes/mobile-top-header.html' %}
+        {% include 'includes/main-nav.html' %}
+    </nav>
+</div>
+```
+mkdir templates/includes
+
+touch templates/includes/main-nav.html
+
+touch templates/includes/mobile-top-header.html
+
+IN base.html insert the following at the end of the header section
+```html
+<div class="row bg-white">
+            <nav class="navbar navbar-expand-lg navbar-light w-100">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                {% include 'includes/mobile-top-header.html' %}
+                {% include 'includes/main-nav.html' %}
+            </nav>
+        </div>
+        <div id="delivery-banner" class="row text-center">
+            <div class="col bg-black text-white">
+                <h4 class="logo-font my-1">Free delivery on orders over £{{ free_delivery_threshold }}!</h4>                
+            </div>            
+        </div>
+```
+
+
