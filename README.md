@@ -665,5 +665,30 @@ In project_name/urls.py eg "boutique_ado/urls.py" add the following
 path('products/', include('products.urls')),
 ```
 
-## make inner template directories ?? WTF
+## Make inner template directories ?? WTF
 mkdir -p products/templates/products
+touch products/templates/products/products.html
+
+In that file add
+```html
+{% extends "base.html" %}
+{% load static %}
+
+{% block page_header %}
+    <div class="container header-container">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                {{ products }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+```
