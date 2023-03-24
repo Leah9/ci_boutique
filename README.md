@@ -5,6 +5,7 @@ django-admin startproject ci_boutique .
 Add thr following to .gitignore
 *.sqlite3
 *.pyc
+.env
 
 Test by running
 python3 manage.py runserver
@@ -16,6 +17,24 @@ python3 manage.py migrate
 
 Create Superuser
 python3 manage.py createsuperuser
+
+*** SECRET KEY
+in settings.py:
+from dotenv import load_dotenv
+load_dotenv()
+
+IN settings.py
+Remove the default Django secret_key
+SECRET_KEY = str(os.getenv('SECRET_KEY'))
+
+pip3 install python-dotenv
+
+Create .env file with a secret key
+SECRET_KEY= "whatever"
+
+
+
+
 
 git remote -v
 git add .
@@ -437,9 +456,13 @@ In templates/base.html change second div 'row' class to
 <div id="topnav" class="row bg-white pt-lg-2 d-none d-lg-flex">
 
 add MY font awesome link to top of  base.html
+```html
 <script src="https://kit.fontawesome.com/0067dce3fb.js" crossorigin="anonymous"></script>
+```
 AND
+```html
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+```
 
 IN settings.py add the following under STATIC_URL = '/static/'
 
