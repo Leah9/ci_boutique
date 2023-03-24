@@ -628,3 +628,42 @@ class CategoryAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 admin.site.register(Category, CategoryAdmin)
 ```
+
+## Setup all product view
+In prducts/views.py
+
+```python
+from django.shortcuts import render
+from .models import Product
+
+# Create your views here.
+def all_products(request):
+    """ A view to show all products, sorting and search queries """
+    products = Product.objects.all()
+    context = {
+        'products': products,
+    }
+    return render(request, 'home/products.html', context)
+```
+
+remove from django.contrib import admin from home/urls.py
+
+touch products/urls.py
+
+In products/urls.py
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.all_products, name='products')
+]
+```
+
+In project_name/urls.py eg "boutique_ado/urls.py" add the following
+```python
+path('products/', include('products.urls')),
+```
+
+## make inner template directories ?? WTF
+mkdir -p products/templates/products
