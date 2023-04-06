@@ -4,7 +4,7 @@ User stories for web shop
 | As a      | I want to be able to          | So that i can |
 |-----------|-----------------------|----------------|
 | Shopper   | View a list of products       | Select one or many to purchase |
-| Shopper   | View single product details   | Identify the proce, read descripton, specification etc |
+| Shopper   | View single product details   | Identify the product, read descripton, specification etc |
 | Shopper   | View the total cost in basket | Avoid spending too much |
 | Registration, login and user account      | |
 | Shopper   | Log in / out                  | Acccess my account information |
@@ -883,3 +883,21 @@ In products/templates/products/products.html add the link to the individual prod
 ```python
 {% url 'product_detail' product.id %}
 ```
+
+## Implement search
+In templates/base.html
+change 
+    <form method="GET" action="">
+to
+    <form method="GET" action="{ url 'products'%}">
+
+AND in templates/includes/mobile-top-header.html do the same
+
+IN products/temlates/views.py
+Enuure the following is present in import
+from django.shortcuts import render, redirect, reverse, get_object_or_404
+from django.contrib import messages
+from django.db.models import Q
+from .models import Product
+
+CHANGE / ADD to def all_products TO
