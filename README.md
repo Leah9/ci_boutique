@@ -1529,7 +1529,8 @@ commit etc
 
 ## Adding products
 in products/templates/products/product_detail.html add the form at the bottom of block content
-<form class="form" action="{% url 'add_to_bag' product.id %}" method="POST">
+'''html
+<form class="form" action="" method="POST">
                         {% csrf_token %}
                         <div class="form-row">
                             <div class="col-12">
@@ -1554,6 +1555,15 @@ in products/templates/products/product_detail.html add the form at the bottom of
                         </div>
                     </form>
 
-      
+     
+'''
+ in static/base.css add
+'''css
+      .btn-outline-black {
+    background: white;
+    color: black !important; /* use important to override link colors for <a> elements */
+    border: 1px solid black;
+}
+'''
 
-
+test with  python3 manage.py runserver
